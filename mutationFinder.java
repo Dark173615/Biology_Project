@@ -1,5 +1,10 @@
 package genefinder;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class mutationFinder {
 	
 	public static int findMutations(String originalString, String newString){
@@ -11,7 +16,6 @@ public class mutationFinder {
 			count++;
 			if(countOriginal == originalString.length()){
 				flag = false;
-				
 				numMutations += Math.abs(newString.length() - countNew);
 			}
 			else if(countNew == newString.length()){
@@ -42,7 +46,7 @@ public class mutationFinder {
 					}
 				}
 				catch(Exception e){
-				
+					System.out.println("hi");
 					flag = false;
 					if(newString.length() <= countNew + 1)
 						numMutations += Math.abs(originalString.length() - countOriginal);
@@ -55,7 +59,7 @@ public class mutationFinder {
 		return numMutations;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
 		String originalString = "agcaaaagca ggggaaaata aaaacaacca aaatgaaagc aaaactacta gttctgttgt"+
        " gtgcatttac agctacatat gcagacacaa tatgtatagg ctaccatgcg aacaactcaa"+
       " ctgacactgt tgacacagta cttgagaaga acgtgacagt gacacactct gtcaacctac"+
@@ -87,9 +91,9 @@ public class mutationFinder {
      " tcagcttctg gatgtgttct aatgggtctt tgcagtgtag aatatgcatc tgagaccaga"+
      " atttcagaaa tataagaaaa aacacccttg tttctact";
 		String newString = "gggaaaataa aaacaaccaa aatgaaagca aaactactgg tcctgttatg tacatttaca"+
-       " gctacatacg cagacacaat atgtataggc taccatgcca acaactcaac cgacactgtt"+
+       " gctacatacg cagacacaat atgtataggc taccatgcca acaactcaac cgacac11tgtt"+
       " gacacagtac ttgagaagaa tgtgacagtg acacactctg tcaacctact tgaggacagt"+
-      " cacaatggaa aactatgtct actaaaagga atagccccac tacaattggg taattgcagc"+
+      " cacaatggaa aactatgtct actaaaagga atagccccac tacaattgg109g taattgcagc"+
       " gttgccggat ggatcttagg aaacccagaa tgcgaattac tgatttccaa ggaatcatgg"+
       " tcctacattg tagaaacacc aaatcccgag aatggaacat gttacccagg gtatttcgcc"+
       " gattatgagg aactgaggga gcaattgagt tcagtatctt catttgagag attcgaaata"+
@@ -113,12 +117,27 @@ public class mutationFinder {
      " aaagaaatag gaaacgggtg ttttgaattc tatcacaagt gtaacaatga atgcatggaa"+
      " agtgtgaaaa atggaactta tgactatcca aaatattccg aagaatcaaa gttaaacagg"+
      " gagaaaattg atggagtaaa attggaatca atgggagtct atcagattct ggcgatctac"+
-     " tcaactgtcg ccagttccct ggttcttttg gtctccctgg gggcaatcag cttctggatg"+
-     " tgttccaatg ggtctttgca gtgtagaata tgcatctgag accagaattt cagaaatata"+
+     " tcaactgtcg ccagttccct ggttcttttg gtctccct1105gg gggcaatcag cttctggatg"+
+     " tgttccaatg ggtctttgca gtgtagaata tgcatct111112gag accagaattt cagaaatata"+
      " agaaaaaa";
+			
 		
-		System.out.println(findMutations(originalString, newString));
+		BufferedReader originalSeq = new BufferedReader(new FileReader("originalSeq.txt"));
+		BufferedReader newSeq = new BufferedReader(new FileReader("newSeq.txt"));
+		String lineOrig, lineNew;
+		String origCombined = "";
+		String newCombined = "";
+		//System.out.println(findMutations(originalString, newString));
+		boolean flag = true;
+		 while((lineOrig = originalSeq.readLine()) != null){
+			 origCombined += lineOrig;
+		 }
+		 while((lineNew = newSeq.readLine()) != null){
+			 newCombined += lineNew;
+		 }
+		 System.out.println(findMutations(origCombined, newCombined));
+		 originalSeq.close();
+		 newSeq.close();
 	}
 	
 }
-
